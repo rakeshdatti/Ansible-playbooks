@@ -1,0 +1,6 @@
+- name: PING
+  hosts: backend
+  tasks:
+  - name: ping the backend server
+    ansible.builtin.ping:
+      data: "Hello world"
