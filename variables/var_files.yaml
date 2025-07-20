@@ -1,0 +1,10 @@
+- name: vard from files
+  hosts: local
+  connection: local
+  vars_files:
+    - course.yaml
+  tasks:
+  - name: print the variable from vars_files
+    ansible.builtin.debug:
+      msg: "This is a variable from vars_files: {{ COURSE }} and {{ DURATION }}"
+     
