@@ -1,0 +1,15 @@
+- name: conditon of number
+  hosts: local
+  connection: local
+  vars:
+    my_number: 10
+  tasks:
+  - name: check if number is greater than 5
+    ansible.builtin.debug:
+      msg: "THe number is greater than 5"
+      when: my_number > 5
+  - name: check if number is less than 5
+    ansible.builtin.debug:
+      msg: "THe number is less than 5"
+      when: my_number < 5
+  
