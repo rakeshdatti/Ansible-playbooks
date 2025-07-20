@@ -1,0 +1,23 @@
+- name: Datatypes
+  hostss: local
+  connection: local
+  vars:  # map
+    course_name: "Ansible Basics"
+    duration: "2 months"
+    topics: #list,[]
+      - "variables"
+      - "playbooks"
+      - "roles"
+      - "installation"
+      - "Datatypes"
+    live: true #boolean
+    tools:
+      configration_management: "Ansible"
+      ci: "Jenkins"
+      infrastructure_as_code: "Terraform"
+  tasks:
+    - name: Print course details
+      ansible.builtin.debug:
+        msg: "Course Name: {{ course_name }}, Duration: {{ duration }}, Topics: {{ topics }}, Live: {{ live }}, Tools: {{ tools }}" 
+    
+    
