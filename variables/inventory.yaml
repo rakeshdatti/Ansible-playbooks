@@ -1,0 +1,7 @@
+- name: vars from inventory
+  hosts: local
+  connection: local
+  tasks:
+  - name: print the variables from inventory
+    ansible.builtin.debug:
+      msg: "This is a variable from inventory: {{ inventory_hostname }} and {{ ansible_host }}"
