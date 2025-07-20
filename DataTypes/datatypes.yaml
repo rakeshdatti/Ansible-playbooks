@@ -1,5 +1,5 @@
 - name: Datatypes
-  hostss: local
+  hosts: local
   connection: local
   vars:  # map
     course_name: "Ansible Basics"
