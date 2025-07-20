@@ -1,0 +1,17 @@
+- name: variable from prompt
+  hosts: local
+  connection: local
+  vars_prompt:
+    - name: "Name"
+      prompt: "Enter your name"
+      private: false
+    - name: "Role"
+      prompt: "Enter your role"
+      private: false
+    - name: "Location"
+      prompt: "Enter your location"
+      private: false
+  tasks:
+    - name: print variable form prompt
+      ansiblee.builtin.debug:
+        msg: "NAme: {{ Name }}, Role: {{ Role }}, Location: {{ Location }}"
