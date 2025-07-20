@@ -4,4 +4,4 @@
   tasks:
   - name: print the variables from inventory
     ansible.builtin.debug:
-      msg: "This is a variable from inventory: {{ inventory_hostname }} and {{ ansible_host }}"
+      msg: "This is a variable from inventory: {{ NAME }} and {{ Role }} and {{ salary }}"
