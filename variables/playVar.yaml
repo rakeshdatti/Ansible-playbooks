@@ -1,0 +1,9 @@
+- name: playvaribales
+  hosts: local
+  connection: local
+  vars:
+    my_variable: "PLAY variable"
+  tasks:
+  - name: print the variables
+    ansible.builtin.debug:
+      msg: "This is playVar and the variable is {{ my_variable }}"

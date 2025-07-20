@@ -1,0 +1,9 @@
+- name: TaskLevelVars
+  hosts: local
+  connection: local
+  tasks:
+   - name: task level variable
+     vars:
+      my_task_variables: "TASk variable"
+      ansible.builtin.debug:
+        msg: "This is task level variable and the value is {{ my_task_variables }}"
