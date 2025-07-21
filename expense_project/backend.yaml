@@ -23,3 +23,46 @@
       url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.z
       dest: /tmp/backend.zip
 
+  - name: unzip the application code
+    ansible.builtin.unarchive:
+      src: /tmp/backend.zip
+      dest: /app
+      remote_src: yes
+  - name: install npm dependecies
+    community.general.npm:
+     path: /app
+     state: present
+
+  - name: copy the backend service file
+    ansible.builtin.copy:
+      src: backend.service
+      dest: /etc/systemd/system/backend.service
+      
+  - name: install mysql client
+    ansible.builtin.package:
+      name: mysql
+      state: present
+
+  - name: connect to mysql server
+    community.mysql.mysql_db:
+      login_user: root 
+      login_password: ExpenseApp@1
+      login_host: mysql.rproject.live
+      target: /app/schema/backend.sql
+
+  - name: reload and enable and start the backend service
+    ansible.builtin.systemd_service:
+      name: backend.service
+      daemon_reload: true
+      state: restarted
+      enabled: yes
+  - name: copy nginx configuration file
+    ansible.builtin.copy:
+      src: expense.conf
+      dest: etc/nginx/default.d/expense.conf
+  
+  - name: restart nginx service
+    ansible.builtin.service:
+      name: nginx
+      state: restarted
+      enabled: yes
