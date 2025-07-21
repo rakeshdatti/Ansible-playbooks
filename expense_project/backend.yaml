@@ -53,7 +53,7 @@
 
   - name: connect to mysql server
     community.mysql.mysql_db:
-      name: all
+      name: backend
       login_user: root 
       login_password: ExpenseApp@1
       login_host: mysql.rproject.live
