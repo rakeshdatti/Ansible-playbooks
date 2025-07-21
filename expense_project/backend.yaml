@@ -69,8 +69,8 @@
 
   - name: copy nginx configuration file
     ansible.builtin.copy:
-      src: expense.conf
-      dest: etc/nginx/default.d/expense.conf
+      src: backend.service
+      dest: /etc/systemd/system/backend.service
   
   - name: restart nginx service
     ansible.builtin.service:
