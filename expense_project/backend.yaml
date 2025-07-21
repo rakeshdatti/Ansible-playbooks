@@ -48,8 +48,8 @@
     ansible.builtin.pip:
       name: "{{ item }}"
       state: present
-      loop:
-        - PyMySQL
+    loop:
+      - PyMySQL
 
   - name: connect to mysql server
     community.mysql.mysql_db:
