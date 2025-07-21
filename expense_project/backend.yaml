@@ -50,6 +50,7 @@
       state: present
     loop:
       - PyMySQL
+      - cryptography
 
   - name: connect to mysql server
     community.mysql.mysql_db:
