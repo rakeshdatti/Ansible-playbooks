@@ -60,20 +60,14 @@
       login_host: mysql.rproject.live
       target: /app/schema/backend.sql
 
-  - name: reload and enable and start the backend service
-    ansible.builtin.systemd_service:
-      name: backend.service
-      daemon_reload: true
-      state: restarted
-      enabled: yes
-
   - name: copy nginx configuration file
     ansible.builtin.copy:
       src: backend.service
       dest: /etc/systemd/system/backend.service
   
-  - name: restart nginx service
-    ansible.builtin.service:
-      name: nginx
+  - name: reload and enable and start the backend service
+    ansible.builtin.systemd_service:
+      name: backend.service
+      daemon_reload: true
       state: restarted
       enabled: yes
