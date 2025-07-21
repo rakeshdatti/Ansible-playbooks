@@ -28,6 +28,7 @@
       src: /tmp/backend.zip
       dest: /app
       remote_src: yes
+
   - name: install npm dependecies
     community.general.npm:
      path: /app
@@ -45,6 +46,7 @@
 
   - name: connect to mysql server
     community.mysql.mysql_db:
+      name: all
       login_user: root 
       login_password: ExpenseApp@1
       login_host: mysql.rproject.live
@@ -56,6 +58,7 @@
       daemon_reload: true
       state: restarted
       enabled: yes
+
   - name: copy nginx configuration file
     ansible.builtin.copy:
       src: expense.conf
