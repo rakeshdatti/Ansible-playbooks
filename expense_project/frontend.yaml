@@ -10,10 +10,9 @@
     - name: start nginx service
       ansible.builtin.service:  
         name: nginx
-        enabled: yes
         state: started
-        
-    
+        enabled: yes       
+
     - name: Recursively remove directory
       ansible.builtin.file:
         path: /usr/share/nginx/html/
