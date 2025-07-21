@@ -44,6 +44,13 @@
       name: mysql
       state: present
 
+  - name: install python package
+    ansible.builtin.pip:
+      name: "{{ item }}"
+      state: present
+      loop:
+        - PyMySQL
+
   - name: connect to mysql server
     community.mysql.mysql_db:
       name: all
