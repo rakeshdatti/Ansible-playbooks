@@ -2,7 +2,7 @@
   hosts: database
   become: yes
   vars:
-    my_sql_root_password: {{ MY_SQL_ROOT_PASSWORD }}
+    my_sql_root_password: "{{ MY_SQL_ROOT_PASSWORD }}"
   tasks:
     - name: install mysql server
       ansible.builtin.package:

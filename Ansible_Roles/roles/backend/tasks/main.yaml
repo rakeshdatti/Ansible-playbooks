@@ -55,8 +55,8 @@
   - name: connect to mysql server
     community.mysql.mysql_db:
       name: backend
-      login_user: ${{ MY_SQL_USER }}
-      login_password: ${{ MY_SQL_PASSWORD }}
+      login_user: "{{ MY_SQL_USER }}
+      login_password: "{{ MY_SQL_PASSWORD }}"
       login_host: ${{ MY_SQL_HOST }}
       target: /app/schema/backend.sql
 
