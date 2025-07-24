@@ -54,9 +54,9 @@
   community.mysql.mysql_db:
     state: import
     name: all
-    login_user: root 
-    login_password: ExpenseApp@01
-    login_host: mysql.rproject.live
+    login_user: "{{ MYSQL_USER }}"  
+    login_password: "{{ MYSQL_ROOT_PASSWORD }}"
+    login_host: "{{ MYSQL_LOGIN_HOST}}"
     target: /app/schema/backend.sql
 
 - name: demon and reload the backend 

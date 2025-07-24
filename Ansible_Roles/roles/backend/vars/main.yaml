@@ -1,3 +1,3 @@
-MY_SQL_HOST: mysql.rproject.live
-MY_SQL_PASSWORD: ExpenseApp@1
-MY_SQL_USER: root
+MYSQL_ROOT_PASSWORD: ExpenseApp@01
+MYSQL_LOGIN_HOST: mysql.rproject.live
+MYSQL_USER: root 
