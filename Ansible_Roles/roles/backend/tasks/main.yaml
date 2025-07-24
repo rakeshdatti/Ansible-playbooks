@@ -1,73 +1,67 @@
-- name: backend setup
-  hosts: backend
-  become: yes 
-  tasks:
-  - name: Disable Node.js module via DNF
-    ansible.builtin.command: dnf module disable nodejs -y
-  - name: enable Node.js
-    ansible.builtin.command: dnf module enable nodejs:20 -y
-  - name: install Node.js
-    ansible.builtin.package:
-      name: nodejs
-      state: present
-  - name: Add application User
-    ansible.builtin.user:
-      name: expense
-      state: present
-  - name: create app directory
-    ansible.builtin.file:
-      name: /app 
-      state: directory
-  - name: download the application code
-    ansible.builtin.get_url:
-      url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
-      dest: /tmp/backend.zip
+- name: disabling the node js
+  ansible.builtin.command:  dnf module disable nodejs -y
 
-  - name: unzip the application code
-    ansible.builtin.unarchive:
-      src: /tmp/backend.zip
-      dest: /app
-      remote_src: yes
+- name: disabling the node js
+  ansible.builtin.command:  dnf module enable nodejs:20 -y
 
-  - name: install npm dependecies
-    community.general.npm:
-     path: /app
-     state: present
+- name: install node js
+  ansible.builtin.package:
+    name: nodejs
+    state: present
+- name: add application user 
+  ansible.builtin.user:
+    name: expense 
+    state: present
 
-  - name: copy the backend service file
-    ansible.builtin.copy:
-      src: backend.service
-      dest: /etc/systemd/system/backend.service
-      
-  - name: install mysql client
-    ansible.builtin.package:
-      name: mysql
-      state: present
+- name: create a directory
+  ansible.builtin.file:
+    name: /app 
+    state: directory
+- name: download  the code using url 
+  ansible.builtin.get_url:
+    url:  https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
+    dest: /tmp/backend.zip
 
-  - name: install python package
-    ansible.builtin.pip:
-      name: "{{ item }}"
-      state: present
-    loop:
-      - PyMySQL
-      - cryptography
+- name: unzip the code 
+  ansible.builtin.unarchive:
+    src: /tmp/backend.zip
+    dest: /app 
+    remote_src: yes
 
-  - name: connect to mysql server
-    community.mysql.mysql_db:
-      name: backend
-      login_user: "{{ MY_SQL_USER }}
-      login_password: "{{ MY_SQL_PASSWORD }}"
-      login_host: ${{ MY_SQL_HOST }}
-      target: /app/schema/backend.sql
+- name: install required lib 
+  community.general.npm:
+    path: /app 
+    state: present
 
-  - name: copy nginx configuration file
-    ansible.builtin.copy:
-      src: backend.service
-      dest: /etc/systemd/system/backend.service
-  
-  - name: reload and enable and start the backend service
-    ansible.builtin.systemd_service:
-      name: backend.service
-      daemon_reload: true
-      state: restarted
-      enabled: yes
+- name: copy the backend sevice file 
+  ansible.builtin.template:
+    src: backend.service.j2
+    dest: /etc/systemd/system/backend.service
+
+- name: install mysql client 
+  ansible.builtin.package:
+    name: mysql 
+    state: present
+
+- name: install python package
+  ansible.builtin.pip:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - PyMySQL
+    - cryptography
+- name: import mysqldata
+  community.mysql.mysql_db:
+    state: import
+    name: all
+    login_user: root 
+    login_password: ExpenseApp@01
+    login_host: mysql.rproject.live
+    target: /app/schema/backend.sql
+
+- name: demon and reload the backend 
+  ansible.builtin.systemd_service:
+    enabled: yes
+    state: restarted 
+    daemon_reload: true
+    name: backend.service
